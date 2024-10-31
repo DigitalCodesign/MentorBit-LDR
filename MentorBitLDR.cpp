@@ -37,9 +37,9 @@
     Constructor, se debe indicar el pin analogico y digital a los que se esta conectando
     el modulo de LDR
 */
-MentorBitLDR::MentorBitLDR(uint8_t analog_pin_ldr, uint8_t digital_pin_ldr){
-    _analog_pin_ldr = analog_pin_ldr;
-    _digital_pin_ldr = digital_pin_ldr;
+MentorBitLDR::MentorBitLDR(uint8_t analog_pin_ldr = 0, uint8_t digital_pin_ldr = 0) {
+    _port.gpios[0] = analog_pin_ldr;
+    _port.gpios[1] = digital_pin_ldr;
 }
 
 /*
@@ -47,7 +47,7 @@ MentorBitLDR::MentorBitLDR(uint8_t analog_pin_ldr, uint8_t digital_pin_ldr){
 */
 bool MentorBitLDR::lecturaDigital(){
     bool value;
-    value = digitalRead(_digital_pin_ldr);
+    value = digitalRead(_port.gpios[1]);
     return value;
 }
 
@@ -57,6 +57,15 @@ bool MentorBitLDR::lecturaDigital(){
 */
 uint16_t MentorBitLDR::lecturaAnalogica(){
     uint16_t value;
-    value = analogRead(_analog_pin_ldr);
+    value = analogRead(_port.gpios[0]);
     return value;
+}
+
+void MentorBitLDR::configPort(const Port& port) {
+
+    _port.type = port.type;
+    _port.location = port.location;
+    _port.gpios[0] = port.gpios[0];
+    _port.gpios[1] = port.gpios[1];
+
 }

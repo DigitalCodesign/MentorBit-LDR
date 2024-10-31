@@ -35,8 +35,9 @@
 #define MentorBitLDR_h
 
 #include <arduino.h>
+#include <MentorPort.h>
 
-class MentorBitLDR
+class MentorBitLDR : public MentorPort
 {
 
     public: 
@@ -44,11 +45,11 @@ class MentorBitLDR
         MentorBitLDR(uint8_t analog_pin_ldr, uint8_t digital_pin_ldr);
         bool lecturaDigital();
         uint16_t lecturaAnalogica();
+        void configPort(const Port& port) override;
 
     private:
 
-        uint8_t _analog_pin_ldr;
-        uint8_t _digital_pin_ldr;
+        Port _port;
 };
 
 
