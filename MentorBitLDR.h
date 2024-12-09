@@ -42,7 +42,7 @@ class MentorBitLDR : public MentorPort
 
     public: 
 
-        MentorBitLDR(uint8_t analog_pin_ldr, uint8_t digital_pin_ldr);
+        MentorBitLDR(uint8_t analog_pin_ldr = 0, uint8_t digital_pin_ldr = 0);
         bool lecturaDigital();
         uint16_t lecturaAnalogica();
         void configPort(const Port& port) override;
