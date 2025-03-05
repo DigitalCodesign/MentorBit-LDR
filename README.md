@@ -1,54 +1,53 @@
+# MentorBitLDR
 
-# MentorBit-LDR
-Esta librería está construida por Digital Codesign para utilizar el módulo de LDR (Light Dependent Resistor), principalmente diseñado para el kit educacional "MentorBit".
+Librería para la lectura de datos de un sensor de luz (LDR) en módulos compatibles con MentorBit.
 
-Puedes encontrar nuestro MentorBit y mucho más material de electrónica y robótica en nuestra tienda oficial:  [https://digitalcodesign.com/shop](https://digitalcodesign.com/shop)
+## Descripción
 
-# Modo de empleo
+La librería `MentorBitLDR` permite leer datos de un sensor de luz (LDR) en módulos compatibles con MentorBit. Ofrece tanto lectura digital (detección de umbral de luz) como lectura analógica (valor de intensidad lumínica), brindando flexibilidad para diversas aplicaciones de detección de luz.
 
-Una vez tengamos la librería instalada desde el Arduino IDE, tenemos que incluir la librería con la siguiente línea:
+## Modo de Empleo
 
-```
-#include <MentorBitLDR.h>
-```
+1.  **Instalación:**
+    * Abre el IDE compatible con MentorBit.
+    * Ve a "Herramientas" -> "Gestionar librerías..."
+    * Busca "MentorBitLDR" e instálala.
+
+2.  **Ejemplo básico:**
+
+    ```c++
+    #include <MentorBitLDR.h>
+
+    MentorBitLDR ldr(A0, 2); // LDR conectado a A0 (analógico) y 2 (digital)
+
+    void setup() {
+      Serial.begin(9600);
+      Serial.println("Sensor LDR inicializado.");
+    }
+
+    void loop() {
+      bool luzDigital = ldr.lecturaDigital();
+      uint16_t luzAnalogica = ldr.lecturaAnalogica();
+
+      Serial.print("Lectura Digital: ");
+      Serial.println(luzDigital ? "Luz detectada" : "Oscuridad");
+
+      Serial.print("Lectura Analógica: ");
+      Serial.println(luzAnalogica);
+
+      delay(1000);
+    }
+    ```
+
+## Constructor y Métodos Públicos
 
 ### Constructor
 
-Una vez incluida la librería, usamos el constructor para crear el objeto del módulo LDR, y definir los pines analógicos y digitales a los que está conectado el módulo de LDR.
+* `MentorBitLDR(uint8_t analog_pin_ldr = 0, uint8_t digital_pin_ldr = 0)`: Crea un objeto `MentorBitLDR`.
+    * `analog_pin_ldr`: Número de pin analógico al que está conectado el LDR. Si no se especifica, se asume que no está conectado a ningún pin inicialmente.
+    * `digital_pin_ldr`: Número de pin digital al que está conectado el LDR. Si no se especifica, se asume que no está conectado a ningún pin inicialmente.
 
-```
-MentorBitLDR ldr(PIN_ANALOGICO, PIN_DIGITAL);
-```
+### Métodos
 
-Donde `PIN_ANALOGICO` es el pin analógico al que está conectado el sensor LDR y `PIN_DIGITAL` es el pin digital a donde está conectado. Si no se especifican, se utilizarán los valores predeterminados `0` para ambos pines.
-
-### Uso
-
-Con el objeto `ldr` definido, podemos obtener la lectura del sensor utilizando las siguientes funciones:
-
-- **Lectura digital**: Para obtener el valor digital (encendido/apagado) de la LDR:
-
-```
-bool valorDigital = ldr.lecturaDigital();
-```
-
-El valor devuelto es `true` o `false` dependiendo del estado de la LDR.
-
-- **Lectura analógica**: Para obtener el valor analógico de la LDR en un rango de 0 a 1023:
-
-```
-uint16_t valorAnalogico = ldr.lecturaAnalogica();
-```
-
-El valor devuelto es un número entre 0 y 1023, correspondiente a la intensidad de luz detectada por la LDR.
-
-### Atributos
-
-- `PIN_ANALOGICO`: Define el pin analógico donde está conectada la LDR.
-- `PIN_DIGITAL`: Define el pin digital donde está conectada la LDR.
-
-### Resumen de Métodos
-
-- `MentorBitLDR(uint8_t analog_pin_ldr, uint8_t digital_pin_ldr)`: Constructor para crear el objeto del sensor LDR, configurando los pines analógico y digital.
-- `lecturaDigital()`: Obtiene el valor digital (encendido/apagado) de la LDR.
-- `lecturaAnalogica()`: Obtiene el valor analógico (intensidad de luz) de la LDR.
+* `bool lecturaDigital()`: Devuelve `true` si se detecta luz (lectura digital), `false` en caso contrario.
+* `uint16_t lecturaAnalogica()`: Devuelve el valor analógico de la intensidad lumínica.
