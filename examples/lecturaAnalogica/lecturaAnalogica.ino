@@ -38,7 +38,7 @@ void setup(){
 
 void loop(){
 
-    // Se muestra por serial el vlaor de la salida analogica
+    // Se muestra por serial el valor de la salida analogica
     Serial.print("El valor analogico de la LDR es: ");
     Serial.println(LDR.lecturaAnalogica());
     delay(1000);
